@@ -20,27 +20,27 @@ class InvertFilter : public Filter
 class Kernel
 {
 protected:
-	//данные ядра
+	//РґР°РЅРЅС‹Рµ СЏРґСЂР°
 	std::unique_ptr<float[]> data;
-	//радиус ядра
+	//СЂР°РґРёСѓСЃ СЏРґСЂР°
 	std::size_t radius;
-	//размер памяти ядра
+	//СЂР°Р·РјРµСЂ РїР°РјСЏС‚Рё СЏРґСЂР°
 	std::size_t getLen() const { return getSize() * getSize(); }
 public:
-	//конструктор пустого ядра
+	//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїСѓСЃС‚РѕРіРѕ СЏРґСЂР°
 	Kernel(std::size_t radius) : radius(radius)
 	{
-		//выделение памяти под массив
+		//РІС‹РґРµР»РµРЅРёРµ РїР°РјСЏС‚Рё РїРѕРґ РјР°СЃСЃРёРІ
 		data = std::make_unique<float[]>(getLen());
 	}
 
-	//конструктор копирования
+	//РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РєРѕРїРёСЂРѕРІР°РЅРёСЏ
 	Kernel(const Kernel& other) : Kernel(other.radius)
 	{
 		std::copy(other.data.get(), other.data.get() + getLen(), data.get());
 	}
 	
-	//аксессоры
+	//Р°РєСЃРµСЃСЃРѕСЂС‹
 	std::size_t getRadius() const { return radius; }
 	std::size_t getSize() const { return 2 * radius + 1; }
 	float operator[] (std::size_t id) const { return data[id]; }
@@ -50,7 +50,7 @@ public:
 class MatrixFilter : public Filter
 {
 protected:
-	// хранится по значению, потому что внутри Kernel содержится указатель
+	// С…СЂР°РЅРёС‚СЃСЏ РїРѕ Р·РЅР°С‡РµРЅРёСЋ, РїРѕС‚РѕРјСѓ С‡С‚Рѕ РІРЅСѓС‚СЂРё Kernel СЃРѕРґРµСЂР¶РёС‚СЃСЏ СѓРєР°Р·Р°С‚РµР»СЊ
 	Kernel mKernel;
 	QColor calcNewPixelColor(const QImage& img, int x, int y) const override;
 
@@ -79,14 +79,14 @@ public:
 class GaussianKernel : public Kernel
 {
 public:
-	//Наследование конструкторов
+	//РќР°СЃР»РµРґРѕРІР°РЅРёРµ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂРѕРІ
 	using Kernel::Kernel;
 	GaussianKernel(std::size_t radius = 2, float sigma = 3.f) : Kernel(radius)
 	{
-		//коэффициент нормировки ядра
+		//РєРѕСЌС„С„РёС†РёРµРЅС‚ РЅРѕСЂРјРёСЂРѕРІРєРё СЏРґСЂР°
 		float norm = 0;
 		int signed_radius = static_cast<int>(radius);
-		//рассчитываем ядро линейного фильтра
+		//СЂР°СЃСЃС‡РёС‚С‹РІР°РµРј СЏРґСЂРѕ Р»РёРЅРµР№РЅРѕРіРѕ С„РёР»СЊС‚СЂР°
 		for (int x = -signed_radius; x <= signed_radius; x++)
 		{
 			for (int y = -signed_radius; y <= signed_radius; y++)
@@ -96,7 +96,7 @@ public:
 				norm += data[idx];
 			}
 		}
-		//нормируем ядро
+		//РЅРѕСЂРјРёСЂСѓРµРј СЏРґСЂРѕ
 		for (std::size_t i = 0; i < getLen(); i++)
 		{
 			data[i] /= norm;
@@ -208,7 +208,7 @@ public:
 	virtual QImage process(const QImage& img) const override;
 };
 
-//лин растяжение
+//Р»РёРЅ СЂР°СЃС‚СЏР¶РµРЅРёРµ
 class LinearTensionFilter : public Filter
 {
 	QColor calcNewPixelColor(const QImage& img, int x, int y) const override;
@@ -216,7 +216,7 @@ public:
 	virtual QImage process(const QImage& img) const override;
 };
 
-//белое не трогать, остальное черное
+//Р±РµР»РѕРµ РЅРµ С‚СЂРѕРіР°С‚СЊ, РѕСЃС‚Р°Р»СЊРЅРѕРµ С‡РµСЂРЅРѕРµ
 class WhiteLinesFilter : public Filter
 {
 	QColor calcNewPixelColor(const QImage& img, int x, int y) const override;

@@ -13,10 +13,10 @@ using std::endl;
 
 //void Dilation(BIT* source[], bool* mask[], BIT* result[])
 //{
-//	// Width, Height – размеры исходного и результирующего изображений
-//	// MW, MH – размеры структурного множества
-//	for (y = MH / 2; y < Height – MH / 2; y++)
-//		for (x = MW / 2; x < Width – MW / 2; x++)
+//	// Width, Height вЂ“ СЂР°Р·РјРµСЂС‹ РёСЃС…РѕРґРЅРѕРіРѕ Рё СЂРµР·СѓР»СЊС‚РёСЂСѓСЋС‰РµРіРѕ РёР·РѕР±СЂР°Р¶РµРЅРёР№
+//	// MW, MH вЂ“ СЂР°Р·РјРµСЂС‹ СЃС‚СЂСѓРєС‚СѓСЂРЅРѕРіРѕ РјРЅРѕР¶РµСЃС‚РІР°
+//	for (y = MH / 2; y < Height вЂ“ MH / 2; y++)
+//		for (x = MW / 2; x < Width вЂ“ MW / 2; x++)
 //		{
 //			BIT max = 0;
 //			for (j = -MH / 2; j <= MH / 2; j++)
@@ -60,19 +60,14 @@ void main(int argc, char *argv[])
 		}
 	}
 
-	//первая фотка
+	//РїРµСЂРІР°СЏ С„РѕС‚РєР°
 	img.load(QString(s.c_str()));
 	img.save("Art/Source.png");
 
-	//следующая
+	//СЃР»РµРґСѓСЋС‰Р°СЏ
 	second_img.load(QString(second_s.c_str()));
 	second_img.save("ImagesCat1/Source.png");
 
-	cout << second_img.bitPlaneCount() << endl;
-	cout << second_img.bits() << endl;
-	cout << second_img.constBits() << endl;
-	cout << second_img.bytesPerLine() << endl;
-	cout << second_img.color(1) << endl;
 
 
 	/*InvertFilter invert;
@@ -102,7 +97,7 @@ void main(int argc, char *argv[])
 	/*PerfectReflectionFilter reflection;
 	reflection.process(img).save("Art/PerfectReflection.png");*/
 
-	//белое или черное
+	//Р±РµР»РѕРµ РёР»Рё С‡РµСЂРЅРѕРµ
 	/*WhiteLinesFilter lines;
 	lines.process(img).save("Art/whitelines.png");*/
 
