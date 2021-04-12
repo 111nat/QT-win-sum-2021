@@ -3,7 +3,7 @@
 #include "Filter.h"
 #include <iostream>
 #include <algorithm>//sort
-
+//-p D:\Education-Win-Sum-21\CompGraph\qt\github\QT-win-sum-2021\31.03.21\QtConsoleApplication1\FromImage\Cat.png
 using std::string;
 using std::cout;
 using std::endl;
@@ -114,7 +114,7 @@ void Dilation(const QImage& source, QImage& result)
 				{
 					for (int i = -MW / 2, ii = 0; i < MW / 2; i++, ii++)
 					{
-						if ((mask[ii + MH * jj]) && (source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).red() > max.red() || source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).green() > max.green() || source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).blue() > max.blue()))
+						if ((mask[ii + MH * jj]) && (source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).red() + source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).green() + source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).blue() > max.red() + max.green() + max.blue()))
 						{
 							max.setRgb(source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).red(), source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).green(), source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).blue());
 						}
@@ -189,7 +189,7 @@ void Erosion(const QImage& source, QImage& result)
 				{
 					for (int i = -MW / 2, ii = 0; i <= MW / 2; i++, ii++)
 					{
-						if ((mask[ii + MH * jj]) && (source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).red() < min.red() || source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).green() < min.green() || source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).blue() < min.blue()))
+						if ((mask[ii + MH * jj]) && (source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).red() + source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).green() + source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).blue() < min.red() + min.green() + min.blue()))
 						{
 							min.setRgb(source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).red(), source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).green(), source.pixelColor(clamp(x + i, source.width() - 1, 0), clamp(y - j, source.height() - 1, 0)).blue());
 						}
@@ -363,10 +363,40 @@ void main(int argc, char *argv[])
 		}
 	}
 
+	
+
 	img.load(QString(s.c_str()));
 	img.save("bitimg/Source.png");
 
-	Kernel mask(2);
+	QImage result;
+	Dilation(img, result);
+	result.save("bitimg/dilation.png");
+
+	Erosion(img, result);
+	result.save("bitimg/erosion.png");
+
+	Opening(img, result);
+	result.save("bitimg/open.png");
+
+	Closing(img, result);
+	result.save("bitimg/close.png");
+
+	Grad(img, result);
+	result.save("bitimg/grad.png");
+
+	TopHat(img, result);
+	result.save("bitimg/tophat.png");
+
+	BlackHat(img, result);
+	result.save("bitimg/blackhat.png");
+
+	//MedianFilter(img, result);
+	//result.save("bitimg/med.png");
+
+	/*InvertFilter invert;
+	invert.process(img).save("Art/Invert.png");*/
+
+	/*Kernel mask(2);
 	for (int i = 0; i < 25; i++)
 	{
 		mask[i] = 0;
@@ -381,10 +411,10 @@ void main(int argc, char *argv[])
 	mask[6] = 0;
 	mask[8] = 0;
 	mask[16] = 0;
-	mask[18] = 0;
+	mask[18] = 0;*/
 	//mask[12] = 0;
 	
-	QImage result;
+	//QImage result;
 
 	/*Dilation(img, result);
 	result.save("bitimg/newdilation.png");*/
@@ -425,8 +455,8 @@ void main(int argc, char *argv[])
 	//	cout << pixels[i].rgb << endl;
 	//}
 
-	Grad(img, result);
-	result.save("bitimg/grad.png");
+	//Grad(img, result);
+	//result.save("bitimg/grad.png");
 
 	/*TopHat(img, mask, result);
 	result.save("bitimg/tophat.png");

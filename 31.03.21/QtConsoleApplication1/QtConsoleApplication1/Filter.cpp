@@ -114,7 +114,7 @@ QImage PerfectReflectionFilter::process(const QImage& img) const
 			
 		}
 	}
-	std::cout << RedMax<<" " << GreenMax<< " " << BlueMax << std::endl;
+	//std::cout << RedMax<<" " << GreenMax<< " " << BlueMax << std::endl;
 
 	for (int x = 0; x < img.width(); x++)
 	{
